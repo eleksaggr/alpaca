@@ -1,0 +1,14 @@
+[package]
+name = "aku"
+version = "0.1.0"
+authors = ["Alex Egger <alex.egger96@gmail.com>"]
+
+[lib]
+crate-type = ["staticlib"]
+
+[dependencies]
+spin = "0.4"
+
+[dependencies.lazy_static]
+version = "1.0"
+features = ["spin_no_std"]
