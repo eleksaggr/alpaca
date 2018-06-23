@@ -13,6 +13,8 @@ mod io;
 mod interrupt;
 pub mod panic;
 
+use io::vga::{Color, WRITER};
+
 #[no_mangle]
 pub extern "C" fn main() {
     banner();
@@ -25,16 +27,13 @@ pub extern "C" fn main() {
         asm!("int 3": : : : "intel");
     }
 
-    logln!("Triggering a page fault, that will trigger a double fault.");
-    unsafe {
-        *(0xdeadbeef as *mut u64) = 42;
-    }
+    WRITER.lock().set_color(Color::Yellow, Color::Red);
+    print!("Execution of the kernel has been halted.");
 
     panic!("Reached end of execution.");
 }
 
 fn banner() {
-    use io::vga::{Color, WRITER};
     WRITER.lock().set_color(Color::White, Color::Cyan);
     WRITER.lock().clear();
     println!("================================================================================");

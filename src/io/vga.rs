@@ -29,6 +29,7 @@ pub fn print(args: core::fmt::Arguments) {
 const WIDTH: usize = 80;
 const HEIGHT: usize = 25;
 
+#[allow(dead_code)]
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 #[repr(u8)]
 pub enum Color {
