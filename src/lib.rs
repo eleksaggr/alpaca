@@ -1,4 +1,4 @@
-#![feature(abi_x86_interrupt, asm, const_fn, extern_prelude, panic_implementation)]
+#![feature(abi_x86_interrupt, asm, const_fn)]
 #![no_std]
 
 #[macro_use]

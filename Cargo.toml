@@ -7,8 +7,14 @@ authors = ["Alex Egger <alex.egger96@gmail.com>"]
 crate-type = ["staticlib"]
 
 [dependencies]
-spin = "0.4"
+spin = "0.5"
 
 [dependencies.lazy_static]
-version = "1.0"
+version = "1.4"
 features = ["spin_no_std"]
+
+[profile.dev]
+panic = "abort"
+
+[profile.release]
+panic = "abort"
