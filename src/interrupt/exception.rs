@@ -5,5 +5,9 @@ pub extern "x86-interrupt" fn breakpoint(frame: &mut StackFrame) {
 }
 
 pub extern "x86-interrupt" fn double(frame: &mut StackFrame, error: u64) {
-    logln!("Exception: Double Fault\n{:#x?}\nError Code: {}", frame, error);
+    logln!(
+        "Exception: Double Fault\n{:#x?}\nError Code: {}",
+        frame,
+        error
+    );
 }
