@@ -1,7 +1,9 @@
 pub mod devices;
-pub mod pio;
+mod pio;
 #[macro_use]
 pub mod vga;
+
+pub use self::pio::Pio;
 
 pub trait Io {
     type Value;

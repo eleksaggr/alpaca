@@ -21,12 +21,19 @@ pub extern "C" fn main() {
 
     logln!("Interrupts are being initialized...");
     interrupt::init();
+    interrupt::enable();
+
+    // logln!("Triggering IRQ1 now");
+    // unsafe {
+    //     asm!("int 33" : : : : "intel");
+    // }
 
     logln!("Calling a breakpoint exception now.");
     unsafe {
-        asm!("int 3": : : : "intel");
+        asm!("int 3" : : : : "intel");
     }
 
+    loop {}
     WRITER.lock().set_color(Color::Yellow, Color::Red);
     print!("Execution of the kernel has been halted.");
 
