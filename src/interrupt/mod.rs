@@ -129,3 +129,15 @@ impl Default for Entry {
         }
     }
 }
+
+pub fn enable() {
+    unsafe {
+        asm!("sti" : : : : "intel", "volatile");
+    }
+}
+
+pub fn disable() {
+    unsafe {
+        asm!("cli" : : : : "intel", "volatile");
+    }
+}
