@@ -1,36 +1,16 @@
 use super::StackFrame;
 
-lazy_static! {
-    static ref IDT: [Entry; 256] = {
-        let mut idt: [Entry; 256] = [Default::default(); 256];
-
-        idt[3] = Entry::with(Handler::Func(exception::breakpoint)).trap();
-        idt[8] = Entry::with(Handler::FuncWithError(exception::double));
-        idt[32] = Entry::with(Handler::Func(irq::timer));
-        idt[33] = Entry::with(Handler::Func(irq::keyboard));
-
-        logln!("Showing full IDT:");
-        for (i, entry) in idt.iter().enumerate() {
-            if entry.present() {
-                logln!("{}: {:#x?}", i, entry);
-            }
-        }
-
-        idt
-    };
-}
-
-type Idt = [Entry; 256];
+pub type Idt = [Entry; 256];
 
 #[derive(Clone, Copy, Debug)]
 #[repr(C, packed)]
 pub struct Pointer {
-    limit: u16,
-    base: u64,
+    pub limit: u16,
+    pub base: u64,
 }
 
 #[inline(always)]
-fn load(ptr: &Pointer) {
+pub fn load(ptr: &Pointer) {
     unsafe {
         asm!("lidt ($0)": : "r"(ptr): "memory");
     }

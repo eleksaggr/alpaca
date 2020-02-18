@@ -3,11 +3,12 @@ use super::StackFrame;
 use io::{Io, Pio};
 
 use interrupt::driver::PIC;
+use interrupt::Irq;
 
 pub extern "x86-interrupt" fn timer(_frame: &mut StackFrame) {
     logln!("Timer interrupt triggered!");
 
-    PIC.lock().acknowledge(1);
+    PIC.lock().acknowledge(Irq::Timer);
 }
 
 pub extern "x86-interrupt" fn keyboard(_frame: &mut StackFrame) {
@@ -16,5 +17,5 @@ pub extern "x86-interrupt" fn keyboard(_frame: &mut StackFrame) {
     let port = Pio::new(0x60);
     println!("Scan code: {}", port.read());
 
-    PIC.lock().acknowledge(2);
+    PIC.lock().acknowledge(Irq::Keyboard);
 }

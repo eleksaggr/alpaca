@@ -1,15 +1,5 @@
+use interrupt::Irq;
 use io::{Io, Pio};
-
-pub enum Irq {
-    Timer = 0,
-    Keyboard = 1,
-    Slave = 2,
-    Floppy = 6,
-    RTC = 8,
-    ACPI = 9,
-    Mouse = 12,
-    CoProcessor = 13,
-}
 
 pub struct ChainedPic {
     master: Pic,
@@ -51,6 +41,15 @@ impl ChainedPic {
 
         self.master.data.write(master_mask);
         self.slave.data.write(slave_mask);
+
+        // Mask all interrupts.
+        for i in 0..16 {
+            if i < 8 {
+                self.master.mask(i);
+            } else {
+                self.slave.mask(i - 8);
+            }
+        }
     }
 
     pub fn disable(&mut self) {
@@ -58,23 +57,23 @@ impl ChainedPic {
         self.master.data.write(0xff);
     }
 
-    pub fn acknowledge(&mut self, irq: u8) {
-        if irq >= 8 {
+    pub fn acknowledge(&mut self, irq: Irq) {
+        if irq as u8 >= 8 {
             self.slave.cmd.write(Pic::EOI);
         }
         self.master.cmd.write(Pic::EOI);
     }
 
-    pub fn mask(&mut self, irq: u8) {
-        if irq > 8 {
-            self.slave.mask(irq - 8);
+    pub fn mask(&mut self, irq: Irq) {
+        if irq as u8 >= 8 {
+            self.slave.mask(irq as u8 - 8);
         } else {
-            self.master.mask(irq);
+            self.master.mask(irq as u8);
         }
     }
 
     pub fn unmask(&mut self, irq: Irq) {
-        if irq as usize > 8 {
+        if irq as u8 >= 8 {
             self.slave.unmask(irq as u8 - 8);
         } else {
             self.master.unmask(irq as u8);
