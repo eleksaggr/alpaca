@@ -33,7 +33,6 @@ pub extern "C" fn main() {
         asm!("int 3" : : : : "intel");
     }
 
-    loop {}
     WRITER.lock().set_color(Color::Yellow, Color::Red);
     print!("Execution of the kernel has been halted.");
 
