@@ -52,11 +52,11 @@ fn banner() {
     println!("*                                                                              *");
     println!("*                                                                              *");
     println!("*                                                                              *");
-    println!("*                                ==============                                *");
-    println!("*                                |            |                                *");
-    println!("*                                | Aku - v0.1 |                                *");
-    println!("*                                |            |                                *");
-    println!("*                                ==============                                *");
+    println!("*                               =================                              *");
+    println!("*                               |               |                              *");
+    println!("*                               | Alpaca - v0.1 |                              *");
+    println!("*                               |               |                              *");
+    println!("*                               =================                              *");
     println!("*                                                                              *");
     println!("*                                                                              *");
     println!("*                                                                              *");

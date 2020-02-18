@@ -1,12 +1,12 @@
 ARCH ?= x86_64
 KERNEL := build/kernel-$(ARCH).bin
 ISO := build/os.iso
-TARGET := $(ARCH)-aku
+TARGET := $(ARCH)-alpaca
 
 LINKER := arch/x86_64/linker.ld
 SOURCES := $(wildcard arch/$(ARCH)/*.asm)
 OBJECTS := $(patsubst arch/$(ARCH)/%.asm, build/arch/$(ARCH)/%.o, $(SOURCES))
-LIB := target/$(TARGET)/debug/libaku.a
+LIB := target/$(TARGET)/debug/libalpaca.a
 
 .PHONY: all clean kernel run
 
@@ -21,7 +21,7 @@ clean:
 # Preferably we would boot the kernel with QEMU's "-kernel" option, but it seems Multiboot2 is not supported.
 $(ISO): $(KERNEL) $(LIB)
 	@mkdir -p build/iso/boot/grub
-	@echo -e "set timeout=0\nset default=0\n\nmenuentry \"Aku\" {\n\tmultiboot2 /boot/kernel.bin\n\tboot\n}" > build/iso/boot/grub/grub.cfg
+	@echo -e "set timeout=0\nset default=0\n\nmenuentry \"Alpaca\" {\n\tmultiboot2 /boot/kernel.bin\n\tboot\n}" > build/iso/boot/grub/grub.cfg
 	@cp $(KERNEL) build/iso/boot/kernel.bin
 	@grub-mkrescue build/iso -o $(ISO)
 
