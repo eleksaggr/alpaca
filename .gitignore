@@ -1,7 +1,12 @@
-target/
-**/*.rs.bk
-
+# Rust
 Cargo.lock
 
+# Build
 build/
+target/
+
+# Log
 *.log
+
+# Org Mode
+*.org
